@@ -22,7 +22,6 @@ public class Swagger {
     public Docket createRestApi() {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        System.out.println("hello world");
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
