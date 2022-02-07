@@ -65,16 +65,12 @@
   .box {
     margin: 0;
     background-color: #f0f0f0;
+    padding-bottom: 20px;
   }
 
   .box .content {
     margin: 12px;
     background-color: white;
     padding: 18px;
-  }
-
-  /deep/ .chartBox .el-tabs__content{
-    height: 700px;
-    position: relative;
   }
 </style>

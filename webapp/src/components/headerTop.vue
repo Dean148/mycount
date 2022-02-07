@@ -16,10 +16,10 @@
   .header {
     width: 100%;
     height: 60px;
+    line-height: 60px;
     background-color: cornflowerblue;
     text-align: left;
     display: flex;
-    line-height: 60px;
   }
 
   .header img {
@@ -35,6 +35,7 @@
   }
 
   .header .user{
+    cursor: pointer;
     font-size: 14px;
     color: white;
     font-weight: bolder;

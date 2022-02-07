@@ -3,7 +3,7 @@
     <el-table
       border
       width="100%"
-      height="calc(100vh - 230px)"
+      height="calc(100vh - 220px)"
       :data="tableData.list">
       <el-table-column
         v-for="item in columns"
