@@ -1,0 +1,105 @@
+{
+  "count": 47,
+  "list": [
+    {
+      "id": "1",
+      "label": "晚餐",
+      "custom": "用户1",
+      "type": "餐饮",
+      "count": 57.8,
+      "cusDate": "2022-01-26",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "2",
+      "label": "晚餐",
+      "custom": "用户1",
+      "type": "餐饮",
+      "count": 42.57,
+      "cusDate": "2022-01-25",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "3",
+      "label": "午餐",
+      "custom": "用户1",
+      "type": "餐饮",
+      "count": 39.9,
+      "cusDate": "2022-01-25",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "4",
+      "label": "午餐",
+      "custom": "用户2",
+      "type": "餐饮",
+      "count": 36.0,
+      "cusDate": "2022-01-24",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "5",
+      "label": "水果",
+      "custom": "用户2",
+      "type": "零食",
+      "count": 27.0,
+      "cusDate": "2022-01-24",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "6",
+      "label": "马桶刷+置物杯",
+      "custom": "用户1",
+      "type": "日用耗品",
+      "count": 19.22,
+      "cusDate": "2022-01-23",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "7",
+      "label": "午餐",
+      "custom": "用户1",
+      "type": "餐饮",
+      "count": 22.8,
+      "cusDate": "2022-01-22",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "8",
+      "label": "晚餐",
+      "custom": "用户1",
+      "type": "餐饮",
+      "count": 38.3,
+      "cusDate": "2022-01-21",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "9",
+      "label": "春联",
+      "custom": "用户1",
+      "type": "日用耗品",
+      "count": 34.4,
+      "cusDate": "2022-01-21",
+      "used": true,
+      "pic": null
+    },
+    {
+      "id": "10",
+      "label": "午餐",
+      "custom": "用户1",
+      "type": "餐饮",
+      "count": 41.2,
+      "cusDate": "2022-01-21",
+      "used": true,
+      "pic": null
+    }
+  ]
+}
