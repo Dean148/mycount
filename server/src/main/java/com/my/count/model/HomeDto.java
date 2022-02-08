@@ -10,6 +10,24 @@ public class HomeDto {
     String comment;
     String type;
     Date cusDate;
+    Boolean used;
+    String pic;
+
+    public Boolean getUsed() {
+        return used;
+    }
+
+    public void setUsed(Boolean used) {
+        this.used = used;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
 
     public int getId() {
         return id;

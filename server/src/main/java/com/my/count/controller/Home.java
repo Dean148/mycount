@@ -2,6 +2,7 @@ package com.my.count.controller;
 
 import com.my.count.model.HomeDto;
 import com.my.count.reqdto.Querydto;
+import com.my.count.resdto.ListResult;
 import com.my.count.service.IHomeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +22,7 @@ public class Home {
 
     @GetMapping("/list")
     @ApiOperation("列表查询")
-    public ResponseEntity<List<HomeDto>> list(){
+    public ResponseEntity<ListResult> list(){
 
         return ResponseEntity.ok(homeService.labels());
     }

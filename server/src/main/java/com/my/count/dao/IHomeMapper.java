@@ -12,4 +12,6 @@ public interface IHomeMapper {
     List<HomeDto> labels();
 
     boolean add(HomeDto dto);
+
+    int num();
 }
