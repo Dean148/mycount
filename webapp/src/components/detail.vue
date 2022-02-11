@@ -89,10 +89,8 @@
     props: ["rows", "type"],
     data() {
       return {
-        form: {
-          showInHome: true
-        },
-        users: ["用户1", "用户2"],
+        form: {},
+        users: ["用户1", "用户2", "我自己"],
         types: [],
       }
     },
@@ -104,7 +102,10 @@
         this.$emit("cancel")
       },
       submit() {
-
+        this.$axiosJava.post(`api/home/${this.form.id ? "update" : "add"}`, this.form).then(res => {
+          this.$message.success("成功")
+          this.$emit("add")
+        })
       },
       getTypes() {
         let url = `/static/api/home/type`
@@ -118,23 +119,30 @@
         })
       },
       getDetail() {
-        let form = this.rows
-
-        if (form) {
-          let url = `/static/api/home/detail`
-          this.$axios({
-            method: "get",
-            url: url,
-          }).then((res) => {
+        if (this.rows.id) {
+          let url = `api/home/detail`
+          this.$axiosJava.get(url, {params: {id: this.rows.id}}).then((res) => {
             this.form = res.data
           }).catch((error) => {
             this.$message.error("获取数据失败")
           })
+        } else {
+          this.form = {
+            used: true
+          }
         }
       }
     },
+    watch: {
+      rows: {
+        immediate: true,
+        handler() {
+          this.getDetail()
+        },
+
+      }
+    },
     mounted() {
-      this.getDetail()
       if (this.type == "bj") {
         this.getTypes()
       }

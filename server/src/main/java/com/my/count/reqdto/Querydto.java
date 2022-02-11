@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Querydto {
     @ApiModelProperty(value = "关键字")
-    String keyWorld;
+    String keyword;
     @ApiModelProperty(value = "类型")
     String type;
 
@@ -29,12 +29,12 @@ public class Querydto {
         this.num = num;
     }
 
-    public String getKeyWorld() {
-        return keyWorld;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setKeyWorld(String keyWorld) {
-        this.keyWorld = keyWorld;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getType() {

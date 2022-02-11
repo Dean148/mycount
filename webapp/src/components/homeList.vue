@@ -4,7 +4,12 @@
       border
       width="100%"
       height="calc(100vh - 220px)"
+      @selection-change="handleSelectionChange"
       :data="tableData.list">
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
       <el-table-column
         v-for="item in columns"
         :key="item.prop"
@@ -28,12 +33,13 @@
       @current-change="handleCurrentChange"
       :current-page="currentPage"
       :page-sizes="[15, 20, 25, 30]"
-      :page-size="15"
+      :page-size="currentSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="tableData.count">
     </el-pagination>
     <el-dialog :visible.sync="showDetail" width="1200px">
-      <detail @cancel="showDetail=false" :rows="currentRow" :type="detailType"></detail>
+      <detail @add="showDetail=false;reSearch()" @cancel="showDetail=false" :rows="currentRow"
+              :type="detailType"></detail>
     </el-dialog>
   </div>
 
@@ -47,10 +53,13 @@
     components: {Detail},
     data() {
       return {
+        selection: [],
+        params: null,
         detailType: "ck",
         showDetail: false,
         currentRow: {},
         currentPage: 1,
+        currentSize: 15,
         tableData: [],
         columns: [
           {
@@ -82,6 +91,25 @@
       }
     },
     methods: {
+      handleSelectionChange(rows) {
+        this.selection = rows
+      },
+      reSearch() {
+        this.$emit("search", this.params)
+      },
+      deleteRows() {
+        this.$axiosJava.post("api/home/delete", this.selection.map(item => {
+          return item.id
+        })).then(res => {
+          this.$message.success("成功")
+          this.reSearch()
+        })
+      },
+      add() {
+        this.currentRow = {}
+        this.detailType = "bj"
+        this.showDetail = true
+      },
       view(scope) {
         this.currentRow = scope.row
         this.detailType = "ck"
@@ -93,25 +121,41 @@
         this.showDetail = true
       },
       rowDelete(scope) {
-
+        this.$axiosJava.post("api/home/delete", [scope.row.id]).then(res => {
+          this.$message.success("成功")
+          this.reSearch()
+        })
       },
-      handleSizeChange() {
-
+      handleSizeChange(currentSize) {
+        this.currentPage = 1
+        this.currentSize = currentSize
+        this.getData()
       },
-      handleCurrentChange() {
-
+      handleCurrentChange(currentPage) {
+        this.currentPage = currentPage
+        this.getData()
       },
       getData() {
-        this.$axios.get("/static/api/home/list").then(res => {
+        this.params.num = this.currentSize
+        this.params.page = this.currentPage
+        this.$axiosJava.post("api/home/list", this.params).then(res => {
           this.tableData = res.data
           this.tableData.list.map((item) => {
             item.used = item.used ? "是" : "否"
           })
         })
+      },
+      query(params) {
+        this.currentPage = 1
+
+        this.params = {
+          ...params,
+          num: this.currentSize,
+          page: this.currentPage
+        }
+        this.currentPage = 1
+        this.getData()
       }
-    },
-    mounted() {
-      this.getData()
     }
   }
 </script>

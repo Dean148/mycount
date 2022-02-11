@@ -18,7 +18,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 
 Vue.prototype.$axiosJava = axios.create({
-  baseURL: "http://127.0.0.1:8080/"
+  baseURL: process.env.VUE_APP_BACKEND_ROOT_URL_JAVA
 })
 
 /* eslint-disable no-new */

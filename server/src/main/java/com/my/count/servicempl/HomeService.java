@@ -47,7 +47,7 @@ public class HomeService implements IHomeService {
     @Override
     public ListResult list(Querydto querydto) {
         querydto.setPage((querydto.getPage() - 1) * querydto.getNum());
-        querydto.setType(filterType(querydto.getType(), querydto.getKeyWorld()));
+        querydto.setType(filterType(querydto.getType(), querydto.getKeyword()));
         ListResult result = new ListResult();
         result.setList(mapper.list(querydto));
         result.setCount(mapper.count(querydto));
@@ -76,13 +76,13 @@ public class HomeService implements IHomeService {
 
     @Override
     public List<SumDto> sum(Querydto querydto) {
-        querydto.setType(filterType(querydto.getType(), querydto.getKeyWorld()));
+        querydto.setType(filterType(querydto.getType(), querydto.getKeyword()));
         return mapper.sum(querydto);
     }
 
     @Override
     public List<VsDto> vs(Querydto querydto) {
-        querydto.setType(filterType(querydto.getType(), querydto.getKeyWorld()));
+        querydto.setType(filterType(querydto.getType(), querydto.getKeyword()));
         return mapper.vs(querydto);
     }
 }

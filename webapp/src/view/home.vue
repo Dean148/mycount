@@ -2,19 +2,19 @@
   <div class="box">
     <HeaderTop></HeaderTop>
     <div class="content">
-      <tool></tool>
+      <tool @search="search" @delete="$refs.list.deleteRows()" @add="$refs.list.add()"></tool>
       <el-row :gutter="20" style="margin-top: 18px">
         <el-col :span="16">
-          <home-list></home-list>
+          <home-list @search="search" ref="list"></home-list>
         </el-col>
         <el-col :span="8">
-          <el-tabs v-model="tabNow" class="chartBox">
+          <el-tabs v-model="tabNow" @tab-click="tabClick" class="chartBox">
             <el-tab-pane name="total" label="总消费">
-              <echart1></echart1>
-              <echart2></echart2>
+              <echart1 ref="echart1"></echart1>
+              <echart2 ref="echart2" :params="params"></echart2>
             </el-tab-pane>
-            <el-tab-pane lazy name="vs" label="消费对比">
-              <echart3></echart3>
+            <el-tab-pane name="vs" label="消费对比">
+              <echart3 ref="echart3"></echart3>
             </el-tab-pane>
           </el-tabs>
         </el-col>
@@ -37,26 +37,27 @@
     data() {
       return {
         tabNow: "total",
+        params: {}
       }
     },
     components: {Echart3, Echart1, Echart2, Tool, HeaderTop, HomeList},
     methods: {
-      add() {
-        let form = {
-          "comment": "1111111111",
-          "count": 0,
-          "cusDate": "2022-02-04",
-          "custom": "string",
-          "label": "2222",
-          "type": "string"
+      tabClick(tab) {
+        this.search(this.params)
+      },
+      search(params) {
+        this.$refs.list.query(params)
+        switch (this.tabNow) {
+          case "total":
+            this.$refs.echart1.query(params)
+            this.$refs.echart2.query(params)
+            break
+          case "vs":
+            this.$refs.echart3.query(params)
+            break
         }
-
-        this.$axiosJava.post("api/home/add", form).then(res => {
-          this.$message.success("成功")
-        }).catch(e => {
-          this.$message.error(e)
-        })
-      }
+        this.params = params
+      },
     }
   }
 </script>
