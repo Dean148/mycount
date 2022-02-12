@@ -13,6 +13,7 @@ public class HomeDto {
     Boolean used;
     String pic;
 
+
     public Boolean getUsed() {
         return used;
     }

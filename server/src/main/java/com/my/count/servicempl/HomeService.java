@@ -32,7 +32,7 @@ public class HomeService implements IHomeService {
         if (type.equals("all")) {
             for (String tp : types
             ) {
-                queryString += tp + " like '%" + keyWorld + "%' or ";
+                queryString +=  tp + " like '%" + keyWorld + "%' or ";
             }
             queryString = queryString.substring(0, queryString.length() - 3);
         } else if (types.contains(type)) {

@@ -5,8 +5,16 @@
         select *
         from home
         <where>
-            ${type}
+            (${type})
+            <if test="date != null">
+                and #{date[1]} >= cusDate
+                and cusDate >= #{date[0]}
+            </if>
+            <if test="used==true">
+                and used is true
+            </if>
         </where>
+        order by cusDate desc
         limit #{page},#{num}
     </select>
 
@@ -14,7 +22,14 @@
         select count(1)
         from home
         <where>
-            ${type}
+            (${type})
+            <if test="date != null">
+                and #{date[1]} >= cusDate
+                and cusDate >= #{date[0]}
+            </if>
+            <if test="used==true">
+                and used is true
+            </if>
         </where>;
     </select>
 
@@ -25,27 +40,41 @@
     </select>
 
     <select id="sum" resultType="com.my.count.resdto.SumDto">
-        select type as name, count(`count`) as value
+        select type as name, sum(`count`) as value
         from home
         <where>
-            ${type}
+            (${type})
+            <if test="date != null">
+                and #{date[1]} >= cusDate
+                and cusDate >= #{date[0]}
+            </if>
+            <if test="used==true">
+                and used is true
+            </if>
         </where>
         group by type;
     </select>
 
     <select id="vs" resultType="com.my.count.resdto.VsDto">
-        select type as name, count(`count`) as value, custom
+        select type as name, sum(`count`) as value, custom
         from home
         <where>
-            ${type}
+            (${type})
+            <if test="date != null">
+                and #{date[1]} >= cusDate
+                and cusDate >= #{date[0]}
+            </if>
+            <if test="used==true">
+                and used is true
+            </if>
         </where>
         group by type, custom;
     </select>
 
 
     <insert id="add" parameterType="com.my.count.model.HomeDto">
-        insert into home(label, custom, `count`, comment, `type`, cusDate)
-        values (#{label}, #{custom}, #{count}, #{comment}, #{type}, #{cusDate})
+        insert into home(label, custom, `count`, comment, `type`, cusDate, pic, used)
+        values (#{label}, #{custom}, #{count}, #{comment}, #{type}, #{cusDate}, #{pic}, #{used})
     </insert>
 
     <update id="update" parameterType="com.my.count.model.HomeDto">
@@ -55,7 +84,9 @@
             `count`= #{count},
             comment= #{comment},
             `type`= #{type},
-            cusDate= #{cusDate}
+            cusDate= #{cusDate},
+            pic= #{pic},
+            used   = #{used}
         where id = #{id}
     </update>
 
