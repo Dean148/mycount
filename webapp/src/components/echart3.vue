@@ -1,15 +1,69 @@
 <template>
-  <div id="chart3"></div>
+  <div>
+    <div id="chart3"></div>
+    <div style="margin-bottom: 10px">平账：
+      <el-button @click="balance" type="primary" size="mini">一键添加</el-button>
+    </div>
+    <div v-for="(item,key) in message" :key="key">
+      <strong>{{key}}</strong>: {{item}}
+    </div>
+  </div>
 </template>
 
 <script>
   export default {
     name: "echart3",
+    data() {
+      return {
+        message: {},
+      }
+    },
     methods: {
+      balance() {
+        let list = []
+
+        for (let i in this.message) {
+          let form = {
+            "label": "自动平账",
+            "custom": i,
+            "count": this.message[i],
+            "comment": "string",
+            "type": "平账",
+            "cusDate": new Date(),
+            "used": true,
+            "pic": null,
+          }
+          list.push(
+            new Promise((resolve => {
+              this.$axiosJava.post(`api/home/add`, form).then(res => {
+                resolve()
+              })
+            }))
+          )
+        }
+        Promise.all(list).then(res => {
+          this.$message.success("成功")
+          this.$emit("balance")
+        })
+      },
+      getMessage(map) {
+        let message = {}
+        let total = 0
+        let count = 0
+        for (let i in map) {
+          total += map[i]
+          count++
+        }
+        let ave = total / count
+        for (let i in map) {
+          message[i] = ave - map[i]
+        }
+        this.message = message
+      },
       query(params) {
         let url = "api/home/vs"
         this.$axiosJava
-          .post(url,params)
+          .post(url, params)
           .then(res => {
             // 基于准备好的dom，初始化echarts实例
             let myChart = echarts.init(document.getElementById("chart3"))
@@ -40,6 +94,8 @@
                 result[totalLabel][item.custom] = item.value
             }
 
+            this.getMessage(result[totalLabel])
+
             this.substrate = ((result[totalLabel][users[0]] - result[totalLabel][users[1]]) / 2).toFixed(2)
 
             myChart.setOption({
@@ -53,7 +109,8 @@
                 }
               },
               legend: {
-                data: users
+                data: users,
+                right: "10"
               },
               xAxis: [
                 {

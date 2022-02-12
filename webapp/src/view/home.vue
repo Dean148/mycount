@@ -2,10 +2,11 @@
   <div class="box">
     <HeaderTop></HeaderTop>
     <div class="content">
-      <tool @search="search" @delete="$refs.list.deleteRows()" @add="$refs.list.add()"></tool>
+      <tool ref="tool" @getLastCount="$refs.list.getLastCount()" @search="search" @delete="$refs.list.deleteRows()"
+            @add="$refs.list.add()"></tool>
       <el-row :gutter="20" style="margin-top: 18px">
         <el-col :span="16">
-          <home-list @search="search" ref="list"></home-list>
+          <home-list @changeDate="(date)=>{$refs.tool.setDate(date)}" @search="search" ref="list"></home-list>
         </el-col>
         <el-col :span="8">
           <el-tabs v-model="tabNow" @tab-click="tabClick" class="chartBox">
@@ -14,7 +15,7 @@
               <echart2 ref="echart2" :params="params"></echart2>
             </el-tab-pane>
             <el-tab-pane name="vs" label="消费对比">
-              <echart3 ref="echart3"></echart3>
+              <echart3 ref="echart3" @balance="search(params)"></echart3>
             </el-tab-pane>
           </el-tabs>
         </el-col>
@@ -43,10 +44,9 @@
     components: {Echart3, Echart1, Echart2, Tool, HeaderTop, HomeList},
     methods: {
       tabClick(tab) {
-        this.search(this.params)
+        this.searchEchart(this.params)
       },
-      search(params) {
-        this.$refs.list.query(params)
+      searchEchart(params) {
         switch (this.tabNow) {
           case "total":
             this.$refs.echart1.query(params)
@@ -56,6 +56,10 @@
             this.$refs.echart3.query(params)
             break
         }
+      },
+      search(params) {
+        this.$refs.list.query(params)
+        this.searchEchart(params)
         this.params = params
       },
     }
